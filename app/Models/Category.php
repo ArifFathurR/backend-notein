@@ -17,6 +17,9 @@ class Category extends Model
         'id_user',
     ];
 
+        const CREATED_AT = 'create_at';
+    const UPDATED_AT = 'update_at';
+
     // Category dimiliki oleh User
     public function user(): BelongsTo
     {

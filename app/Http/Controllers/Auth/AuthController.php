@@ -52,7 +52,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => "Berhasil melakukan register",
             'data' => $data,
-        ]);
+        ],200);
     }
 
     /**
