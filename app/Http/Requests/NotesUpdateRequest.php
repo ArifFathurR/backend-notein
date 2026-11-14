@@ -22,8 +22,24 @@ class NotesUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            
+        $rules = [
+            'title' => ['sometimes', 'required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'status' => ['sometimes', 'boolean'],
+            'id_categories' => ['nullable', 'exists:categories,id'],
         ];
+
+        if ($this->hasFile('background_path') || $this->file('background_path')) {
+            $rules['background_path'] = [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048'
+            ];
+        } else {
+            $rules['background_path'] = ['nullable', 'string'];
+        }
+
+        return $rules;
     }
 }

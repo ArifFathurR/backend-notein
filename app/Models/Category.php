@@ -29,6 +29,6 @@ class Category extends Model
     // Category memiliki banyak Note
     public function notes(): HasMany
     {
-        return $this->hasMany(Notes::class, 'id_category');
+        return $this->hasMany(Notes::class, 'id_categories');
     }
 }

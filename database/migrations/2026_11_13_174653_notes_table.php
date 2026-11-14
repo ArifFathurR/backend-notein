@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
+            $table->string('background_path')->nullable();
             $table->boolean('status')->default(false);
-            $table->foreignId('id_category')
+            $table->foreignId('id_categories')
                 ->nullable()
                 ->constrained('categories')
+                ->cascadeOnDelete();
+            $table->foreignId('id_user')
+                ->constrained('users')
                 ->cascadeOnDelete();
             $table->timestamp('create_at');
             $table->timestamp('update_at');

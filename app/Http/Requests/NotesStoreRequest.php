@@ -23,7 +23,16 @@ class NotesStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'background_path' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048'
+            ],
+            'status' => ['sometimes', 'boolean'],
+            'id_categories' => ['nullable', 'exists:categories,id'],
         ];
     }
 }

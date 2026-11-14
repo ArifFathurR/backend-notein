@@ -35,7 +35,7 @@ use HasApiTokens, HasFactory, Notifiable;
         return $this->hasMany(Category::class, 'id_user');
     }
 
-    public function notes () :HasMany {
+    public function notes() :HasMany {
         return $this->hasMany(Notes::class, 'id_user');
     }
 }

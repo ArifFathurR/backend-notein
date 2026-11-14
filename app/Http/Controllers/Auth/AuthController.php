@@ -14,45 +14,46 @@ class AuthController extends Controller
      * Login User
      */
     public function login(Request $request)
-{
-    $validated = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|string',
-    ]);
-
-    $user = User::where('email', $validated['email'])->first();
-
-    if (!$user || !Hash::check($validated['password'], $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['Email atau password salah.'],
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
+
+        $user = User::where('email', $validated['email'])->first();
+
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['Email atau password salah.'],
+            ]);
+        }
+
+        $token = $user->createToken('mobile-app')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login berhasil',
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+                'token_type' => 'Bearer',
+            ],
+        ], 200);
     }
 
-    $token = $user->createToken('mobile-app')->plainTextToken;
-
-    return response()->json([
-        'message' => 'Login berhasil',
-        'data' => [
-            'user' => $user,
-            'token' => $token,
-            'token_type' => 'Bearer',
-        ],
-    ], 200);
-}
-
-    public function register (Request $request) {
+    public function register(Request $request)
+    {
         $data = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string',
-            'password' => 'required|string'
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
 
-        User::create($data);
+        $user = User::create($data);
 
         return response()->json([
             'message' => "Berhasil melakukan register",
-            'data' => $data,
-        ],200);
+            'data' => $user,
+        ], 200);
     }
 
     /**

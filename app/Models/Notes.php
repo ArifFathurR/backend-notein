@@ -11,14 +11,19 @@ class Notes extends Model
 {
     use HasFactory;
 
+    protected $table = 'notes';
+
     protected $fillable = [
         'title',
         'description',
         'background_path',
         'status',
-        'id_category',
+        'id_categories',
         'id_user',
     ];
+
+    const CREATED_AT = 'create_at';
+    const UPDATED_AT = 'update_at';
 
     protected function casts(): array
     {
@@ -36,7 +41,7 @@ class Notes extends Model
     // Note dimiliki oleh Category
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'id_category');
+        return $this->belongsTo(Category::class, 'id_categories');
     }
 
     // Note memiliki banyak Task
