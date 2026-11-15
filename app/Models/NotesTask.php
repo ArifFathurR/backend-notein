@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class NotesTask extends Model
 {
     use HasFactory;
+    protected $table = 'notes_task';
 
     protected $fillable = [
         'task_name',
         'status',
-        'id_notes',
+        'notes_id',
     ];
 
     protected function casts(): array
@@ -25,6 +26,6 @@ class NotesTask extends Model
     // Task dimiliki oleh Note
     public function note(): BelongsTo
     {
-        return $this->belongsTo(Notes::class, 'id_notes');
+        return $this->belongsTo(Notes::class, 'notes_id');
     }
 }

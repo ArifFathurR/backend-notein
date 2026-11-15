@@ -7,6 +7,7 @@ use App\Http\Requests\NotesStoreRequest;
 use App\Http\Requests\NotesUpdateRequest;
 use App\Models\Notes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class NotesController extends Controller
@@ -26,6 +27,18 @@ class NotesController extends Controller
             'message' => 'Berhasil menampilkan data notes',
             'data' => $notes
         ], 200);
+    }
+
+    public function NoteTask() {
+        $notes = Notes::with('tasks')
+            ->where('id_user', Auth::id())
+            ->whereHas('tasks')
+            ->get();
+
+        return response()->json([
+            'message' => "Berhasil menampilkan catatan dengan task",
+            'data' => $notes
+        ]);
     }
 
     /**

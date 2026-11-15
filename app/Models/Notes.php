@@ -47,6 +47,6 @@ class Notes extends Model
     // Note memiliki banyak Task
     public function tasks(): HasMany
     {
-        return $this->hasMany(NotesTask::class, 'id_notes');
+        return $this->hasMany(NotesTask::class, 'notes_id');
     }
 }

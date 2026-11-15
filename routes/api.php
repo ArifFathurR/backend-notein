@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/category', CategoryController::class);
     Route::post('/notes/{id}', [NotesController::class, 'update']);
     Route::apiResource('/notes', NotesController::class);
-
+    Route::get('/note-task',[NotesController::class, 'NoteTask']);
 });
